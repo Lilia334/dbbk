@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Круговая диаграмма</title>
+  <script src="https://www.google.com/jsapi"></script>
+ </head>
+ <body>
+  <form method="POST" action="/grafic">
+  <label>Назва теми: </label>
+                    <p><select id="sel1" name="sel1">{{range .}}{{range .Topics}}
+                     <option value="{{ .ID}}">{{ .Name_topic}}</option>{{end}}{{end}}
+                    
+                   </select></p>
+
+                   <label>Номер групи: </label>
+                    <p><select id="sel2" name="sel2">{{range .}}{{range .Groups}}
+                     <option value="{{ .Id}}">{{ .Numb_g}}</option>{{end}}{{end}}
+                   </select></p>
+<input type="submit" name="Vhod" value="Переглянути результати" onclick="">
+   {{range .}}<input type="text" name="k" id="k" value="{{.Mark_max}}">{{end}}
+ {{range .}} {{range .Cont_res}}<input type="text" name="n" id="n1" value="{{.Id1}}">
+  <input type="text" name="n1" id="1" value="Студенти з кількістю балів < {{.K}}">{{end}}{{end}}
+  {{range .}} {{range .Cont_res2}}<input type="text" name="n2" id="n2" value="{{.Id1}}">{{end}}{{end}}
+  <input type="text" name="n3" id="2" value="Студенти з кількістю балів < та >">
+  {{range .}} {{range .Cont_res3}}  <input type="text" name="n2" id="n3" value="{{.Id1}}">{{end}}{{end}}
+  <input type="text" name="n3" id="3" value="Студенти з кількістю балів >">
+  <script>
+ if (document.getElementById('k').value != '0') {
+   google.load("visualization", "1", {packages:["corechart"]});
+   google.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var i; 
+    var po;
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'TRE');
+    data.addColumn('number', 'dv');
+     for (i = 1; i < 4; i++) {
+po = 'n' + i.toString();
+     data.addRow( [document.getElementById(i).value, parseFloat(document.getElementById(po).value) ])  }
+ 
+    var options = {
+     is3D: true
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('air'));
+     chart.draw(data, options);
+   }
+}
+  </script>
+</form>
+  <div id="air" style="width: 85%; height: 400px;"></div>
+ </body>
+</html>
