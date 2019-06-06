@@ -1,11 +1,204 @@
-<!DOCTYPE html>
-<html>
- <head>
-  <meta charset="utf-8">
-  <title>Круговая диаграмма</title>
   <script src="https://www.google.com/jsapi"></script>
- </head>
+ 
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Colorlib">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <!-- Page Title -->
+    <title>Адміністратор</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
+    <!-- Simple line Icon -->
+    <link rel="stylesheet" href="/static/css/simple-line-icons.css">
+    <!-- Themify Icon -->
+    <link rel="stylesheet" href="/static/css/themify-icons.css">
+    <!-- Hover Effects -->
+    <link rel="stylesheet" href="/static/css/set1.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<style>
+    {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+div.left-menu5 {
+    line-height: 30px;
+    background-color: #9370DB;
+    padding-left: 15px;
+    border-radius: 10px;
+    width: 230px;
+}
+
+h1 {
+  text-align: center;  
+}
+
+input.invalid {
+  background-color: #ffdddd;
+}
+
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: Raleway;
+  cursor: pointer;
+}
+    input[type="submit"] {
+
+    width: 200px;
+    background: #f0b10f;
+    color: black;
+    height: 30px;
+    cursor: pointer;
+    margin-left: 20%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+.user-title {
+    display: block;
+    font-family: 'OpenSans-Bold';
+    font-size: 20px;
+    color: black;
+    padding-bottom: 15px;
+}
+.poster_left {
+    display: inline-block;
+    vertical-align: top;
+    font-weight: bold;
+    width: 88%;
+
+}
+.user-form li {
+    line-height: 33px;
+    margin-bottom: 16px;
+}
+.user-form ul label {
+    font-size: 16px;
+    width: 35%;
+    line-height: 22px;
+    display: inline-block;
+}
+.user-form input[type="text"] {
+    float: right;
+    width: 345px;
+    height: 40px;
+    margin-right: 25px;
+    padding: 12px 12px 12px;
+    border-radius: 6px;
+}
+.user-form input[type="submit"] {
+    display: block;
+    margin: 30px auto 0;
+    width: 225px;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #fff;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+li {
+    list-style: none;
+}
+.user-form {
+    width: 95%;
+    display: block;
+    background-color: rgba(235, 235, 235, 0.9);
+    position: relative;
+    padding: 75px;
+        margin-bottom: 25px;
+}.user-title {
+    display: block;
+    font-family: 'OpenSans-Bold';
+    font-size: 20px;
+    color: #000;
+    padding-bottom: 15px;
+}
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+table.table{
+    width: 100%;
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid black;
+}
+
+</style>
  <body>
+    <!--============================= HEADER =============================-->
+    <div class="nav-menu">
+        <div class="bg transition">
+            <div class="container-fluid fixed is-sticky">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <a href="/"  class="navbar-brand" style="color: #fff;font-size: 38px;">DbBK</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-menu"></span>
+              </button>
+                            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="/tasktest">Завдання тренажеру, тесту</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/admin">Студенти</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/results">Результати тестувань</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-light top-btn" href="/admin/logout">Вихід</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SLIDER -->
+    <!--// SLIDER -->
+    <!--//END HEADER -->
+
+    <section class="main-block" style="background-color: white">
+     <div style="padding: 5%; padding-top: 10%; background-color: white">
+     <div class="left-menu5">
+                <a href="/results" style=" color: black; text-decoration: underline;">Переглянути результати тестувань</a><br>
+                   <a href="/stattest" style="color: black;">Переглянути статистику</a>
+                    </div>
   <form method="POST" action="/grafic">
   <label>Назва теми: </label>
                     <p><select id="sel1" name="sel1">{{range .}}{{range .Topics}}
@@ -18,13 +211,13 @@
                      <option value="{{ .Id}}">{{ .Numb_g}}</option>{{end}}{{end}}
                    </select></p>
 <input type="submit" name="Vhod" value="Переглянути результати" onclick="">
-   {{range .}}<input type="text" name="k" id="k" value="{{.Mark_max}}">{{end}}
- {{range .}} {{range .Cont_res}}<input type="text" name="n" id="n1" value="{{.Id1}}">
-  <input type="text" name="n1" id="1" value="Студенти з кількістю балів < {{.K}}">{{end}}{{end}}
-  {{range .}} {{range .Cont_res2}}<input type="text" name="n2" id="n2" value="{{.Id1}}">{{end}}{{end}}
-  <input type="text" name="n3" id="2" value="Студенти з кількістю балів < та >">
-  {{range .}} {{range .Cont_res3}}  <input type="text" name="n2" id="n3" value="{{.Id1}}">{{end}}{{end}}
-  <input type="text" name="n3" id="3" value="Студенти з кількістю балів >">
+   {{range .}}<input type="text" name="k" id="k" value="{{.Mark_max}}" style="display: none">{{end}}
+ {{range .}} {{range .Cont_res}}<input type="text" name="n" id="n1" value="{{.Id1}}" style="display: none">
+  <input type="text" name="n1" id="1" value="Студенти з кількістю балів < {{.K}}" style="display: none">{{end}}{{end}}
+  {{range .}} {{range .Cont_res2}}<input type="text" name="n2" id="n2" value="{{.Id1}}" style="display: none">
+  <input type="text" name="n3" id="2" value="Студенти з кількістю балів < {{.K}} та > {{.K2}}" style="display: none">{{end}}{{end}}
+  {{range .}} {{range .Cont_res3}}  <input type="text" name="n2" id="n3" value="{{.Id1}}" style="display: none">
+  <input type="text" name="n3" id="3" value="Студенти з кількістю балів > {{.K}}" style="display: none">{{end}}{{end}}
   <script>
  if (document.getElementById('k').value != '0') {
    google.load("visualization", "1", {packages:["corechart"]});
@@ -49,5 +242,28 @@ po = 'n' + i.toString();
   </script>
 </form>
   <div id="air" style="width: 85%; height: 400px;"></div>
- </body>
+ </div>
+</section>
+  <footer class="main-block dark-bg" style="padding: 30px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="text-align: center">
+            <img src="/static/img/onaft.png" style="width: 60px; height: 60px; vertical-align: middle;">
+            <span style="color: white"> ©  ONAFT  2019   </span>
+            <img src="/static/img/KitKB.png" style="width: 100px; height: 70px; vertical-align: middle;">
+          </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+<script src="static/js/jquery-3.2.1.min.js"></script>
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+
+    <script>
+               $('.fixed').addClass('is-sticky');
+
+    </script>
+  </body>
 </html>

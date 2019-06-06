@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"crypto/sha256"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -13,6 +12,8 @@ import (
 	"database/sql"
 	"time"
 	"crypto/sha256"
+	"io"
+	"path/filepath"
 )
 type Details struct {
 	Mark float64
@@ -133,6 +134,7 @@ func initController() {
 	router.HandleFunc("/tasktest", Testtask)   
 	router.HandleFunc("/admin/test/{id}/delete", DeleteTest)
 	router.HandleFunc("/admin/test/{id}/edit", UpdateTest)
+	router.HandleFunc("/QuestionAdd", AddQuestion)
 	router.HandleFunc("/Quest2", QuesTrain) //тренажер
 	router.HandleFunc("/Quest1", QuesTest) //тест
 	router.HandleFunc("/stattest", Statistic)
@@ -149,6 +151,120 @@ func initController() {
 	router.HandleFunc("/admin/logout", logoutAdmin)
 
 }
+type Qp struct {
+	Id int
+}
+func AddQuestion(w http.ResponseWriter, r *http.Request) { 
+session, _ := store.Get(r, "testApplication")
+	if session.Values["isAdmin"] == 1 {
+src, hdr, err := r.FormFile("image_q")
+if err != nil {
+	fmt.Fprintf(w, "Err: %s", err)
+}
+defer src.Close()
+dst, err := os.Create(filepath.Join(os.TempDir(), hdr.Filename))
+      if err != nil {
+	fmt.Fprintf(w, "Err: %s", err)        
+      }
+      defer dst.Close()
+
+      io.Copy(dst, src)
+
+
+
+
+
+
+
+
+
+
+type_q := r.FormValue("type")
+type_q2, err :=  strconv.Atoi(type_q)
+if err != nil {
+			fmt.Fprintf(w, "Err: %s", err)
+			return
+		}
+text_q := r.FormValue("text_qu")
+count_ans := r.FormValue("count_a")
+id_top := r.FormValue("top");
+id_top2, err := strconv.Atoi(id_top)
+	if err != nil {
+			fmt.Fprintf(w, "Err: %s", err)
+			return
+		}
+type_qq := r.FormValue("type2");
+if type_q2 == 2 {
+	ans_true := r.FormValue("ans1");
+	_, err1 := db.Exec("INSERT INTO answer_options(text_answer, correct) values ($1, 'true')",ans_true)
+		if err1 != nil {
+			fmt.Fprintf(w, "Err: %s", err)
+			return
+		}
+	count_ansi, err := strconv.Atoi(count_ans)
+	if err != nil {
+			fmt.Fprintf(w, "Err: %s", err)
+			return
+		}
+	_, err7 := db.Exec("INSERT INTO questions(type_question, id_topic, text_question, type) values ($1, $2, $3,$4)", type_q2, id_top2, text_q, type_qq)
+		if err7 != nil {
+			fmt.Fprintf(w, "Err: %s", err7)
+			return
+		}
+rows0, err0 := db.Query("select  max(id) from questions")
+	if err0 != nil {
+		log.Fatal(err0)
+	}
+	defer rows0.Close()
+	tests0 := []Qp{}
+	for rows0.Next() {
+		test0 := Qp{}    	
+		err0 := rows0.Scan(&test0.Id)
+		if err0 != nil {
+			log.Fatal(err0)
+		}
+		_, err8 := db.Exec("INSERT INTO answer_question(id_question, id_answer, mark, correctness, type_t) VALUES ($1,(select max(id) from answer_options), 1, true, 1);", test0.Id)
+		if err8 != nil {
+			fmt.Fprintf(w, "Err: %s", err8)
+			return
+		}
+		for i:=2; i<=count_ansi; i++ {
+
+		p:="ans"+strconv.Itoa(i);
+		fmt.Println(p)
+		oi := r.FormValue(p)
+		_, err56 := db.Exec("INSERT INTO answer_options(text_answer, correct) values ($1, false)",oi)
+		if err56 != nil {
+			fmt.Fprintf(w, "Err: %s", err56)
+			return
+		}
+_, err81 := db.Exec("INSERT INTO answer_question(id_question, id_answer, mark, correctness, type_t) VALUES ($1,(select max(id) from answer_options), 0, false, 1);", test0.Id)
+		if err81 != nil {
+			fmt.Fprintf(w, "Err: %s", err81)
+			return
+		}
+		
+	}
+		defer rows0.Close()
+		tests0 = append(tests0, test0)
+	}
+
+
+}
+
+
+
+
+
+
+
+
+
+} else {
+		http.Redirect(w, r, "/admin", 302)
+		return
+	}
+}	
 func UpdateTest(w http.ResponseWriter, r *http.Request) {
 session, _ := store.Get(r, "testApplication")
 	if session.Values["isAdmin"] == 1 { 
@@ -248,6 +364,7 @@ func Graficr(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "testApplication")
 	if session.Values["isAdmin"] == 1 { 
 		//робота з графіками
+		if r.Method == "POST" {
 		id_g1 := r.FormValue("sel2")
 		id_g, err := strconv.Atoi(id_g1)
 		if err != nil {
@@ -262,6 +379,10 @@ func Graficr(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("src/templates/admin/grafics.html"))
 			tmpl.Execute(w, SS)
 
+		} else {
+				http.Redirect(w, r, "/stattest", 302)
+		return
+		 }
 		} else {
 			http.Redirect(w, r, "/admin", 302)
 		return
@@ -847,6 +968,8 @@ Toq := []respondData{}
 			fmt.Fprintf(w, "Err: %s", err)
 			return
 		}
+		http.Redirect(w, r, "/admin/students", 302)
+		return
 		
 			}
 		}
